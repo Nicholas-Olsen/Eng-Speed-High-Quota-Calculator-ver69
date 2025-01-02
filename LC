@@ -194,10 +194,10 @@ table:nth-of-type(3) td:nth-child(2) {
     <input type="number" id="RequiredQuota" step="10" value="130" min="130" required>
     <label for="DaysLeft">&nbsp;Days Left :&nbsp;</label>
     <select id="DaysLeft" required>
-        <option value="0">0 day</option>
-        <option value="1">1 day</option>
-        <option value="2">2 days</option>
-        <option value="3">3 days</option>
+        <option value="0">0 Day</option>
+        <option value="1">1 Day</option>
+        <option value="2">2 Days</option>
+        <option value="3">3 Days</option>
     </select>
     <label for="MoonOrbitCost">Destination :&nbsp;</label>
     <select id="MoonOrbitCost" required>

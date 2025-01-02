@@ -340,8 +340,8 @@ function calculate() {
     const daysLeft = parseInt(document.getElementById('DaysLeft').value);
 
 
-    let playerUtilityPurchase = 0; // 플레이어 유틸리티 구매 초기화
-    let shipUtilityPurchase = 0; // 선박 유틸리티 구매 초기화
+    let playerUtilityPurchase = 0; // 플레이어 유틸 구매 초기화
+    let shipUtilityPurchase = 0; // 선박 유틸 구매 초기화
     let totalCost = 0; // 총 비용 초기화
 
     // 각 항목에 대한 비용 계산

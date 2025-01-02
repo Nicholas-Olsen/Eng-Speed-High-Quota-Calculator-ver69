@@ -194,10 +194,10 @@ table:nth-of-type(3) td:nth-child(2) {
     <input type="number" id="RequiredQuota" step="10" value="130" min="130" required>
     <label for="DaysLeft">&nbsp;Days Left :&nbsp;</label>
     <select id="DaysLeft" required>
-        <option value="0">0일</option>
-        <option value="1">1일</option>
-        <option value="2">2일</option>
-        <option value="3">3일</option>
+        <option value="0">0 day</option>
+        <option value="1">1 day</option>
+        <option value="2">2 days</option>
+        <option value="3">3 days</option>
     </select>
     <label for="MoonOrbitCost">Destination :&nbsp;</label>
     <select id="MoonOrbitCost" required>
@@ -216,7 +216,7 @@ table:nth-of-type(3) td:nth-child(2) {
                 <th>Equipments</th>
                 <th>Buy or not</th>
                 <th>Number</th>
-                <th>Discount price(Optional)</th>
+                <th>DC price (Optional)</th>
             </tr>
         </thead>
         <tbody>
@@ -227,7 +227,7 @@ table:nth-of-type(3) td:nth-child(2) {
                 <td><input type="number" step="3" id="salePrice1" value="30" max="30"></td>
             </tr>
             <tr>
-                <td>LockPicker</td>
+                <td>Lockpicker</td>
                 <td><input type="checkbox" name="item2" value="20"></td>
                 <td><input type="number" min="0" id="number2"></td>
                 <td><input type="number" step="2" id="salePrice2" value="20" max="20"></td>
@@ -295,7 +295,7 @@ table:nth-of-type(3) td:nth-child(2) {
             <tr>
                 <th>Equipments</th>
                 <th>Buy or not</th>
-                <th>Discount price(Optional)</th>
+                <th>DC price (Optional)</th>
             </tr>
         </thead>
         <tbody>

@@ -1,7 +1,7 @@
 ### Speed High Quota Sell Helper 
 ### Made my Nichol ### ver.69
 <html>
-<html lang="ko">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +20,7 @@
 body {
     background-color: #333333;
     color: #99ff99;
-    font-family: Sans-serif;
+    font-family: Cursive;
     font-weight: bold;
 }
 
@@ -30,8 +30,8 @@ fieldset {
     max-width: 650px;
     margin: 30px auto;
     border-radius: 10px;
-    background-color: #333333;  /* 배경색 */
-    box-sizing: border-box;  /* 내부 여백 및 테두리 포함하여 크기 계산 */
+    background-color: #333333;  /* Background Color */
+    box-sizing: border-box;  /* Calculate size, including internal margins and borders */
 }
         h1 {
             text-align: center;
@@ -47,19 +47,19 @@ fieldset {
 
 table {
     width: 100%;
-    border-collapse: collapse;  /* 셀의 경계를 합침 */
-    border-spacing: 1; /* 테이블 셀 간격을 0으로 설정 */
-    margin-top: 10px;
-    border-radius: 10px;
-    overflow: hidden; /* 둥글게 처리된 모서리 내부의 내용 잘림 방지 */
-    border: 5px solid #33ff33 !important;  /* 테이블 테두리 색상 */
+   border-collapse: collapse; /* merge the boundaries of the cells */
+   border-spacing: 1; /* Set table cell spacing to 0 */
+   margin-top: 10px;
+   border-radius: 10px;
+   overflow: hidden; /* prevent content cut inside rounded corners */
+   border: 5px solid #33ff33!important; /* Table border color */
 }
 
 th, td {
     padding: 5px;
     text-align: center;
-    border: 2px solid #33ff33 !important;  /* 테두리 색상을 강제로 적용 */
-    background-color: #333333;  /* 배경색 설정 */
+    border: 2px solid #33ff33 !important;  /* Force border colors */
+    background-color: #333333;  /* background color */
 }
 
         th:first-child, td:first-child {

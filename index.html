@@ -188,6 +188,14 @@ table:nth-of-type(3) td:nth-child(2) {
 <fieldset>
     <h1>High Quota Challenge <br> Sell & Purchase Calculator <br> </h1>
 
+<div style="margin-bottom: 10px;">
+    <label for="versionSelector"> Select Version </label>
+    <select id="versionSelector" style="font-family: sans-serif; font-size: 16px; padding: 5px; border: 1px solid #33ff33; background-color: #333333; color: #ffffff; width: auto; height: 40px; font-weight: bold; box-sizing: border-box;">
+        <option value="v56">v56</option>
+        <option value="v69" selected>v69 (Latest)</option>
+    </select>
+</div>
+	
 <div style="display: flex; align-items: center; margin-bottom: 10px;">
     <label for="RequiredQuota">&nbsp;Quota :&nbsp;</label>
     <input type="number" id="RequiredQuota" step="10" value="130" min="130" required>
@@ -231,7 +239,7 @@ table:nth-of-type(3) td:nth-child(2) {
                 <td><input type="number" min="0" id="number2"></td>
                 <td><input type="number" step="2" id="salePrice2" value="20" max="20"></td>
             </tr>
-            <tr>
+           <tr id="herbicideRow">
                 <td>Weed Killer</td>
                 <td><input type="checkbox" name="item3" value="25"></td>
                 <td><input type="number" min="0" id="number3"></td>
@@ -249,8 +257,8 @@ table:nth-of-type(3) td:nth-child(2) {
                 <td><input type="number" min="0" id="number5"></td>
                 <td><input type="number" step="5" id="salePrice5" value="50" max="50"></td>
             </tr>
-            <tr>
-                <td>Belt Bag</td>
+                   <tr id="beltBackpackRow">
+                <td>Belt bag</td>
                 <td><input type="checkbox" name="item6" value="45"></td>
                 <td><input type="number" min="0" id="number6"></td>
                 <td><input type="number" step="4.5" id="salePrice6" value="45" max="45"></td>
@@ -333,6 +341,38 @@ table:nth-of-type(3) td:nth-child(2) {
 
 
 <script>
+
+    // 초기 상태 설정
+    document.getElementById("v69").checked = true;
+
+    // 버전 변경 시 이벤트 처리
+    document.querySelectorAll('input[name="version"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            if (this.value === 'v56') {
+                // v56 선택 시 변경 사항
+                document.getElementById("beltBackpackRow").style.display = 'none'; // 벨트 배낭 행 숨기기
+                const herbicideRow = document.getElementById("herbicideRow");
+                const checkbox = herbicideRow.querySelector('input[type="checkbox"]');
+                const salePriceInput = herbicideRow.querySelector('#salePrice3');
+                checkbox.value = "40";
+                salePriceInput.value = "40";
+                salePriceInput.max = "40";
+                salePriceInput.step = "4";
+            } else {
+                // v69 선택 시 원래 상태로 복원
+                document.getElementById("beltBackpackRow").style.display = ''; // 벨트 배낭 행 보이기
+                const herbicideRow = document.getElementById("herbicideRow");
+                const checkbox = herbicideRow.querySelector('input[type="checkbox"]');
+                const salePriceInput = herbicideRow.querySelector('#salePrice3');
+                checkbox.value = "25";
+                salePriceInput.value = "25";
+                salePriceInput.max = "25";
+                salePriceInput.step = "2.5";
+            }
+        });
+    });
+	
+	
 function calculate() {
     const requiredQuota = parseInt(document.getElementById('RequiredQuota').value);
     const moonOrbitCost = parseInt(document.getElementById('MoonOrbitCost').value);

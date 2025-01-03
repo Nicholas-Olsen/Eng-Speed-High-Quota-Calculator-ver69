@@ -188,14 +188,14 @@ table:nth-of-type(3) td:nth-child(2) {
 <fieldset>
     <h1>High Quota Challenge <br> Sell & Purchase Calculator <br> </h1>
 
-<div style="margin-bottom: 10px;">
-    <label for="versionSelector"> Select Version </label>
-    <select id="versionSelector" style="font-family: sans-serif; font-size: 16px; padding: 5px; border: 1px solid #33ff33; background-color: #333333; color: #ffffff; width: auto; height: 40px; font-weight: bold; box-sizing: border-box;">
-        <option value="v56">v56</option>
-        <option value="v69" selected>v69 (Latest)</option>
-    </select>
-</div>
-	
+    <div style="margin-bottom: 10px;">
+        <label for="versionSelector"> Select Version </label>
+        <select id="versionSelector" style="font-family: sans-serif; font-size: 16px; padding: 5px; border: 1px solid #33ff33; background-color: #333333; color: #ffffff; width: auto; height: 40px; font-weight: bold; box-sizing: border-box;">
+            <option value="v56">v56</option>
+            <option value="v69" selected>v69 (Latest)</option>
+        </select>
+    </div>
+    	
 <div style="display: flex; align-items: center; margin-bottom: 10px;">
     <label for="RequiredQuota">&nbsp;Quota :&nbsp;</label>
     <input type="number" id="RequiredQuota" step="10" value="130" min="130" required>
@@ -339,42 +339,32 @@ table:nth-of-type(3) td:nth-child(2) {
     <div id="result"></div> <!-- 결과 표시 공간 -->
 </fieldset>
 
-
 <script>
 
-    // 초기 상태 설정
-    document.getElementById("v69").checked = true;
-
     // 버전 변경 시 이벤트 처리
-document.querySelector('#versionSelector').addEventListener('change', function() {
-    // 버전 선택이 v56일 경우
-    if (this.value === 'v56') {
-        // v56에 맞게 행을 숨기고 값을 수정합니다.
-        document.getElementById("beltBackpackRow").style.display = 'none'; // 벨트 배낭 행 숨기기
+    document.querySelector('#versionSelector').addEventListener('change', function() {
+        const version = this.value;
+        const beltBackpackRow = document.getElementById("beltBackpackRow");
         const herbicideRow = document.getElementById("herbicideRow");
         const checkbox = herbicideRow.querySelector('input[type="checkbox"]');
         const salePriceInput = herbicideRow.querySelector('#salePrice3');
-        
-        // v56에 맞는 값으로 설정
-        checkbox.value = "40";
-        salePriceInput.value = "40";
-        salePriceInput.max = "40";
-        salePriceInput.step = "4";
-    } else { // v69일 경우
-        // v69에 맞게 원래대로 복원
-        document.getElementById("beltBackpackRow").style.display = ''; // 벨트 배낭 행 보이기
-        const herbicideRow = document.getElementById("herbicideRow");
-        const checkbox = herbicideRow.querySelector('input[type="checkbox"]');
-        const salePriceInput = herbicideRow.querySelector('#salePrice3');
-        
-        // v69에 맞는 값으로 복원
-        checkbox.value = "25";
-        salePriceInput.value = "25";
-        salePriceInput.max = "25";
-        salePriceInput.step = "2.5";
-    }
-});
-	
+
+        if (version === 'v56') {
+            // v56에 맞게 행을 숨기고 값을 수정
+            beltBackpackRow.style.display = 'none';
+            checkbox.value = "40";
+            salePriceInput.value = "40";
+            salePriceInput.max = "40";
+            salePriceInput.step = "4";
+        } else { // v69일 경우
+            beltBackpackRow.style.display = ''; // 벨트 배낭 행 보이기
+            checkbox.value = "25";
+            salePriceInput.value = "25";
+            salePriceInput.max = "25";
+            salePriceInput.step = "2.5";
+        }
+    });
+
 function calculate() {
     const requiredQuota = parseInt(document.getElementById('RequiredQuota').value);
     const moonOrbitCost = parseInt(document.getElementById('MoonOrbitCost').value);
@@ -427,41 +417,39 @@ if (totalPurchaseCost < requiredQuota) {
 }
 
      // NeedtoSell 계산
-       let NeedtoSell;
-    if (isNaN(requiredQuota) || isNaN(moonOrbitCost)) {
-        NeedtoSell = "Error";
-    } else {
-        let baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + 75 + requiredQuota) / 6;
+         let NeedtoSell;
+        if (isNaN(requiredQuota) || isNaN(moonOrbitCost)) {
+            NeedtoSell = "Error";
+        } else {
+            let baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + 75 + requiredQuota) / 6;
 
-        switch (daysLeft) {
-            case 0:
-                NeedtoSell = baseValue;
-                break;
-            case 1:
-                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + requiredQuota) / 6;
-                baseValue /= 0.77;
-                NeedtoSell = Math.ceil(baseValue % 1 >= 0.4 ? Math.ceil(baseValue) + 2 : Math.ceil(baseValue) + 1);
-                break;
-            case 2:
-                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 75 + requiredQuota) / 6;
-                NeedtoSell = Math.floor(baseValue / 0.53);
-                break;
-            case 3:
-                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 150 + requiredQuota) / 6;
-                NeedtoSell = Math.ceil(baseValue / 0.3);
-                break;
+            switch (daysLeft) {
+                case 0:
+                    NeedtoSell = baseValue;
+                    break;
+                case 1:
+                    baseValue /= 0.77;
+                    NeedtoSell = Math.ceil(baseValue % 1 >= 0.4 ? Math.ceil(baseValue) + 2 : Math.ceil(baseValue) + 1);
+                    break;
+                case 2:
+                    baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 75 + requiredQuota) / 6;
+                    NeedtoSell = Math.floor(baseValue / 0.53);
+                    break;
+                case 3:
+                    baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 150 + requiredQuota) / 6;
+                    NeedtoSell = Math.ceil(baseValue / 0.3);
+                    break;
+            }
+
+            NeedtoSell = Math.ceil(NeedtoSell / 130) * 130;  // 130단위로 올림
+            NeedtoSell += " $";
         }
 
-        NeedtoSell = Math.ceil(NeedtoSell, 130);
-        NeedtoSell += " $";
+        // 결과 출력
+        const resultDiv = document.getElementById('result');
+        resultDiv.innerText = NeedtoSell;
+        resultDiv.style.display = 'inline';
     }
-
-    // 결과 출력
-      const resultDiv = document.getElementById('result');
-    resultDiv.innerText = NeedtoSell;
-    resultDiv.style.display = 'inline';
-}
-
 </script>
 </body>
 </html>

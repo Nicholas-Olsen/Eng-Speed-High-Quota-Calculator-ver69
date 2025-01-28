@@ -373,7 +373,7 @@ function calculate() {
     let shipUtilityPurchase = 0;
     let totalCost = 0; // total price reset
 
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 11; i++) { // 11번까지 계산
         const checkbox = document.querySelector(`input[name="item${i}"]`);
         const quantity = parseInt(document.getElementById(`number${i}`).value) || 0;
         const salePrice = parseInt(document.getElementById(`salePrice${i}`).value) || 0;
@@ -392,10 +392,9 @@ function calculate() {
     }
 
     // ship upgrade price
-    for (let j = 2; j <= 3; j++) {
-        const shipCheckbox = document.querySelector(`input[name="ship${j}"]`);
-        if (shipCheckbox && shipCheckbox.checked) { // when checkbox defined
-            shipUtilityPurchase += parseInt(shipCheckbox.value); // total upgrade
+     for (let j = 1; j <= 3; j++) {
+        const checkbox = document.querySelector(`input[name="ship${j}"]`);
+        const salePrice = parseInt(checkbox.value) || 0;
         }
     }
 

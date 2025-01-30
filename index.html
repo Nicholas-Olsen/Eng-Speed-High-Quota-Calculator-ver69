@@ -361,29 +361,29 @@ table:nth-of-type(3) td:nth-child(2) {
             salePriceInput.max = "25";
             salePriceInput.step = "2.5";
         }
-    });
-
-function calculate() {
+    });function calculate() {
     const requiredQuota = parseInt(document.getElementById('RequiredQuota').value);
     const moonOrbitCost = parseInt(document.getElementById('MoonOrbitCost').value);
     const daysLeft = parseInt(document.getElementById('DaysLeft').value);
 
 
-    let playerUtilityPurchase = 0; 
-    let shipUtilityPurchase = 0; 
-    let totalCost = 0; 
+    let playerUtilityPurchase = 0; // 플레이어 유틸리티 구매 초기화
+    let shipUtilityPurchase = 0; // 선박 유틸리티 구매 초기화
+    let totalCost = 0; // 총 비용 초기화
 
-    for (let i = 1; i <= 11; i++) {
+    // 각 항목에 대한 비용 계산
+    for (let i = 1; i <= 11; i++) { // 11번까지 계산
         const checkbox = document.querySelector(`input[name="item${i}"]`);
         const quantity = parseInt(document.getElementById(`number${i}`).value) || 0;
         const salePrice = parseInt(document.getElementById(`salePrice${i}`).value) || 0;
 
+        // 체크박스가 선택된 경우에만 계산
         if (checkbox && checkbox.checked) {
-            playerUtilityPurchase += quantity * salePrice; 
+            playerUtilityPurchase += quantity * salePrice; // 가격 계산
         }
     }
 
-   // cruiser price
+   // 크루저 구매 금액 설정
     let CruiserPurchase = 0;
     const cruiserCheckbox = document.querySelector('input[name="ship1"]');
     const cruiserDiscount = parseInt(document.querySelector('input[name="ship1"]').parentNode.nextElementSibling.querySelector('input[type="number"]').value) || 370;
@@ -391,8 +391,8 @@ function calculate() {
     if (cruiserCheckbox && cruiserCheckbox.checked) {
         CruiserPurchase = cruiserDiscount;
     }
-	
-    // ship upgrade price
+
+   // 선박 장비 비용 추가 계산
     for (let j = 1; j <= 3; j++) {
         const checkbox = document.querySelector(`input[name="ship${j}"]`);
         const salePrice = parseInt(checkbox.value) || 0;
@@ -401,19 +401,23 @@ function calculate() {
             shipUtilityPurchase += salePrice; // 선박 장비 가격 합산
         }
     }
-	
+
+
+    // 필요할 경우 할당량보다 낮은지 확인
+    const totalPurchaseCost = moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase;
+
 if (totalPurchaseCost < requiredQuota) {
     const resultDiv = document.getElementById('result');
-    resultDiv.innerText = "# 할당량이 필요 자금보다 높음";
-    resultDiv.classList.add('small-font'); 
+    resultDiv.innerText = "# Your Quota is Higher than requirements";
+    resultDiv.classList.add('small-font'); // 작은 폰트 스타일 적용
     resultDiv.style.display = 'inline';
     return;
 } else {
     const resultDiv = document.getElementById('result');
-    resultDiv.classList.remove('small-font'); 
+    resultDiv.classList.remove('small-font'); // 작은 폰트 스타일 제거
 }
-	
-     // NeedtoSell calculate
+
+     // NeedtoSell 계산
        let NeedtoSell;
     if (isNaN(requiredQuota) || isNaN(moonOrbitCost)) {
         NeedtoSell = "Error";
@@ -443,7 +447,7 @@ if (totalPurchaseCost < requiredQuota) {
         NeedtoSell += " $";
     }
 
-        // print result
+    // 결과 출력
       const resultDiv = document.getElementById('result');
     resultDiv.innerText = NeedtoSell;
     resultDiv.style.display = 'inline';
@@ -451,5 +455,4 @@ if (totalPurchaseCost < requiredQuota) {
 
 </script>
 </body>
-</html>
 </html>

@@ -369,16 +369,17 @@ function calculate() {
     const daysLeft = parseInt(document.getElementById('DaysLeft').value);
 
 
-    let playerUtilityPurchase = 0;
-    let shipUtilityPurchase = 0;
-    let totalCost = 0; // total price reset
+    let playerUtilityPurchase = 0; 
+    let shipUtilityPurchase = 0; 
+    let totalCost = 0; 
 
-    for (let i = 1; i <= 11; i++) { // 11번까지 계산
+    for (let i = 1; i <= 11; i++) {
         const checkbox = document.querySelector(`input[name="item${i}"]`);
         const quantity = parseInt(document.getElementById(`number${i}`).value) || 0;
         const salePrice = parseInt(document.getElementById(`salePrice${i}`).value) || 0;
+
         if (checkbox && checkbox.checked) {
-            playerUtilityPurchase += salePrice * quantity;
+            playerUtilityPurchase += quantity * salePrice; 
         }
     }
 
@@ -390,62 +391,65 @@ function calculate() {
     if (cruiserCheckbox && cruiserCheckbox.checked) {
         CruiserPurchase = cruiserDiscount;
     }
-
+	
     // ship upgrade price
-     for (let j = 1; j <= 3; j++) {
+    for (let j = 1; j <= 3; j++) {
         const checkbox = document.querySelector(`input[name="ship${j}"]`);
         const salePrice = parseInt(checkbox.value) || 0;
+
+        if (checkbox && checkbox.checked) {
+            shipUtilityPurchase += salePrice; // 선박 장비 가격 합산
         }
     }
-
-    // if the total is lower than quota
-    const totalPurchaseCost = moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase;
-
+	
 if (totalPurchaseCost < requiredQuota) {
     const resultDiv = document.getElementById('result');
-    resultDiv.innerText = "# Your Quota is higher then required funds!";
-    resultDiv.classList.add('small-font'); // smaller font style
+    resultDiv.innerText = "# 할당량이 필요 자금보다 높음";
+    resultDiv.classList.add('small-font'); 
     resultDiv.style.display = 'inline';
     return;
 } else {
     const resultDiv = document.getElementById('result');
-    resultDiv.classList.remove('small-font'); // no style
+    resultDiv.classList.remove('small-font'); 
 }
 	
      // NeedtoSell calculate
-         let NeedtoSell;
-        if (isNaN(requiredQuota) || isNaN(moonOrbitCost)) {
-            NeedtoSell = "Error";
-        } else {
-            let baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + 75 + requiredQuota) / 6;
+       let NeedtoSell;
+    if (isNaN(requiredQuota) || isNaN(moonOrbitCost)) {
+        NeedtoSell = "Error";
+    } else {
+        let baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + 75 + requiredQuota) / 6;
 
-            switch (daysLeft) {
-                case 0:
-                    NeedtoSell = baseValue;
-                    break;
-                case 1:
-                    baseValue /= 0.77;
-                    NeedtoSell = Math.ceil(baseValue % 1 >= 0.4 ? Math.ceil(baseValue) + 2 : Math.ceil(baseValue) + 1);
-                    break;
-                case 2:
-                    baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 75 + requiredQuota) / 6;
-                    NeedtoSell = Math.floor(baseValue / 0.53);
-                    break;
-                case 3:
-                    baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 150 + requiredQuota) / 6;
-                    NeedtoSell = Math.ceil(baseValue / 0.3);
-                    break;
-            }
-
-            NeedtoSell = Math.ceil(NeedtoSell / 130) * 130;  // 130 for each step
-            NeedtoSell += " $";
+        switch (daysLeft) {
+            case 0:
+                NeedtoSell = baseValue;
+                break;
+            case 1:
+                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 + requiredQuota) / 6;
+                baseValue /= 0.77;
+                NeedtoSell = Math.ceil(baseValue % 1 >= 0.4 ? Math.ceil(baseValue) + 2 : Math.ceil(baseValue) + 1);
+                break;
+            case 2:
+                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 75 + requiredQuota) / 6;
+                NeedtoSell = Math.floor(baseValue / 0.53);
+                break;
+            case 3:
+                baseValue = Math.round((moonOrbitCost + playerUtilityPurchase + CruiserPurchase + shipUtilityPurchase) * 5 - 150 + requiredQuota) / 6;
+                NeedtoSell = Math.ceil(baseValue / 0.3);
+                break;
         }
 
-        // print result
-        const resultDiv = document.getElementById('result');
-        resultDiv.innerText = NeedtoSell;
-        resultDiv.style.display = 'inline';
+        NeedtoSell = Math.ceil(NeedtoSell, 130);
+        NeedtoSell += " $";
     }
+
+        // print result
+      const resultDiv = document.getElementById('result');
+    resultDiv.innerText = NeedtoSell;
+    resultDiv.style.display = 'inline';
+}
+
 </script>
 </body>
+</html>
 </html>
